@@ -1,6 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable import/no-extraneous-dependencies */
-
 'use client';
 
 import { motion } from 'framer-motion';
@@ -124,8 +121,8 @@ export default function Home() {
                         selectedCategory === category ? 'default' : 'outline'
                       }
                       className={`cursor-pointer transition-colors ${selectedCategory === category
-                          ? 'bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]/[0.9]'
-                          : 'bg-[var(--card)] text-[var(--foreground)] border-[var(--border)] hover:bg-[var(--muted)]'
+                        ? 'bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]/[0.9]'
+                        : 'bg-[var(--card)] text-[var(--foreground)] border-[var(--border)] hover:bg-[var(--muted)]'
                         }`}
                       onClick={() => setSelectedCategory(category)}
                     >

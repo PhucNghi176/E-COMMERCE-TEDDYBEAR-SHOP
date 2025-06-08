@@ -18,10 +18,10 @@ export default function MainNavbar() {
   return (
     <header className="sticky top-0 z-50 w-full bg-[var(--background)]/[0.85] backdrop-blur-lg border-b border-[var(--border)] shadow-sm">
       <div className="container flex h-20 items-center justify-between px-4 sm:px-6 max-w-full">
-        <Link href="/" className="flex items-center space-x-2">
-          <span className="text-xl sm:text-2xl font-bold font-poppins bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] bg-clip-text text-transparent">
-            Test
-          </span>
+        <Link href="/">
+
+          <img src="/logo.png" alt="logo" className="w-20 h-20" />
+
         </Link>
         <nav className="hidden md:flex items-center gap-8">
           <Link

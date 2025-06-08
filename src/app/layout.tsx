@@ -25,19 +25,22 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: 'Next.js Boilerplate | Professional Starter Template',
+  icons: {
+    icon: '/logo.png',
+  },
+  title: 'Không thích gấu bông | Gấu bông Ngân Phạm',
   description:
     'A highly opinionated and production-ready Next.js 15 boilerplate with TypeScript, Tailwind CSS, ESLint, Prettier, Husky, and comprehensive SEO optimization.',
   keywords:
-    'next.js, boilerplate, typescript, tailwind css, eslint, prettier, husky, seo, nextjs 15, react, web development',
-  authors: [{ name: 'Anwar Hossain' }],
-  creator: 'Anwar Hossain',
+    'gấu bông,gaubong, gau bong, ngan pham, gấu bông ngân phạm, gaubongnganpham,gau bong ngan pham',
+  authors: [{ name: 'Ngân Phạm' }],
+  creator: 'Ngân Phạm',
   metadataBase: new URL('https://your-domain.com'),
   openGraph: {
     type: 'website',
-    locale: 'en_US',
+    locale: 'vi_VN',
     url: 'https://your-domain.com',
-    title: 'Next.js Boilerplate | Professional Starter Template',
+    title: 'Không thích gấu bông | Gấu bông Ngân Phạm',
     description:
       'Production-ready Next.js 15 boilerplate with all the essential tools',
     siteName: 'Next.js Boilerplate',
