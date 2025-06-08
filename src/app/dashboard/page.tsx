@@ -3,11 +3,9 @@
 import { motion } from 'framer-motion';
 import { LogOut, Settings, User } from 'lucide-react';
 import Link from 'next/link';
-import { useUser } from '@/contexts/UserContext';
+
 
 export default function DashboardPage() {
-  const { user, signOut } = useUser();
-
   const fadeIn = {
     initial: { opacity: 0, y: 10 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.4 } },
@@ -41,7 +39,7 @@ export default function DashboardPage() {
             Settings
           </Link>
           <button 
-            onClick={signOut}
+            
             className="flex items-center gap-2 p-2 w-full text-sm font-medium text-[var(--foreground)] hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)] rounded-md transition-colors duration-200"
           >
             <LogOut className="h-5 w-5" />
@@ -57,7 +55,7 @@ export default function DashboardPage() {
           {...fadeIn}
         >
           <h1 className="text-3xl font-bold text-[var(--foreground)] mb-4">
-            Welcome, {user?.firstName || user?.emailAddresses[0].emailAddress}!
+            Welcome, Ngân Phạm!
           </h1>
           <p className="text-lg text-[var(--muted-foreground)] mb-8">
             This is your dashboard. Use the sidebar to navigate through your

@@ -1,16 +1,12 @@
 'use client';
 
-import { Github, Icon, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useUser } from '@/contexts/UserContext';
-
 import ThemeToggle from './ThemeToggle';
 
 export default function MainNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { isSignedIn, user, signOut } = useUser();
-
   const handleToggle = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -52,27 +48,23 @@ export default function MainNavbar() {
           onClick={handleToggle}
         >
           <div className="relative w-6 h-6">
-            <Menu 
-              className={`h-6 w-6 absolute transition-all duration-300 ease-in-out ${
-                mobileMenuOpen ? 'opacity-0 rotate-90 scale-75' : 'opacity-100 rotate-0 scale-100'
-              }`} 
+            <Menu
+              className={`h-6 w-6 absolute transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'opacity-0 rotate-90 scale-75' : 'opacity-100 rotate-0 scale-100'
+                }`}
             />
-            <X 
-              className={`h-6 w-6 absolute transition-all duration-300 ease-in-out ${
-                mobileMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-75'
-              }`} 
+            <X
+              className={`h-6 w-6 absolute transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-75'
+                }`}
             />
           </div>
         </button>
 
-        <div className={`fixed inset-x-0 top-19 z-50 bg-[var(--background)] border-b border-[var(--border)] shadow-lg md:hidden overflow-hidden transition-all duration-500 ease-in-out max-w-full ${
-          mobileMenuOpen 
-            ? 'max-h-screen opacity-100 transform translate-y-0' 
+        <div className={`fixed inset-x-0 top-19 z-50 bg-[var(--background)] border-b border-[var(--border)] shadow-lg md:hidden overflow-hidden transition-all duration-500 ease-in-out max-w-full ${mobileMenuOpen
+            ? 'max-h-screen opacity-100 transform translate-y-0'
             : 'max-h-0 opacity-0 transform -translate-y-4'
-        }`}>
-          <div className={`container py-6 flex flex-col space-y-4 px-4 sm:px-6 max-w-full transition-all duration-300 ease-in-out delay-100 ${
-            mobileMenuOpen ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-2'
           }`}>
+          <div className={`container py-6 flex flex-col space-y-4 px-4 sm:px-6 max-w-full transition-all duration-300 ease-in-out delay-100 ${mobileMenuOpen ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-2'
+            }`}>
             <Link
               href="/posts"
               className="text-sm font-medium text-[var(--foreground)] hover:text-[var(--primary)] transition-all duration-200 hover:translate-x-2"
