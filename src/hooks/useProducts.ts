@@ -10,7 +10,7 @@ export interface Product {
     price: number;
     color?: string[];
     imgUrl?: string[];
-    productTags?: ProductTag[];
+    tags?: ProductTag[];
     createdAt: string;
     updatedAt?: string;
     deletedAt?: string;
