@@ -1,3 +1,4 @@
+// src/app/api/posts/route.ts
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
@@ -8,21 +9,18 @@ export async function GET(request: Request) {
     const sortBy = searchParams.get('sortBy') || 'newest';
 
     // TODO: Replace with external API call to fetch posts
-    // const queryParams = new URLSearchParams();
-    // if (query) queryParams.append('query', query);
-    // if (category) queryParams.append('category', category);
-    // queryParams.append('sortBy', sortBy);
-    
-    // const response = await fetch(`YOUR_EXTERNAL_API_ENDPOINT/posts?${queryParams}`, {
-    //   headers: {
-    //     'Authorization': 'Bearer YOUR_API_TOKEN',
-    //     'Content-Type': 'application/json'
-    //   }
-    // });
-    // const posts = await response.json();
+    const queryParams = new URLSearchParams();
+    if (query) queryParams.append('query', query);
+    if (category) queryParams.append('category', category);
+    queryParams.append('sortBy', sortBy);
 
-    // Placeholder response - replace with actual API call
-    const posts: any[] = [];
+    const response = await fetch(`YOUR_EXTERNAL_API_ENDPOINT/posts?${queryParams}`, {
+      headers: {
+        'Authorization': 'Bearer YOUR_API_TOKEN',
+        'Content-Type': 'application/json'
+      }
+    });
+    const posts = await response.json();
 
     return NextResponse.json(posts);
   } catch (error) {

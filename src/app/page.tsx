@@ -4,57 +4,30 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Code, Rocket, Search, ShieldCheck, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { usePosts } from '@/hooks/usePosts';
-import { useEffect } from 'react';
-
+import { Tag, useTags } from '@/hooks/useTags';
+import { useProducts, Product } from '@/hooks/useProducts';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [sortBy, setSortBy] = useState('newest');
-  const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const {
-    data: posts,
-    isLoading,
-    error,
-  } = usePosts(
-    debouncedQuery,
-    selectedCategory !== 'All' ? selectedCategory : undefined,
-    sortBy
-  );
-
-  // Debounce search query
+  const { data: tags, isLoading: tagsLoading } = useTags();
+  const { data: products, isLoading: productsLoading } = useProducts({
+    searchTerm: debouncedQuery,
+    sortColumn: 'createdAt',
+    sortOrder: 'desc',
+    pageIndex: 1,
+    pageSize: 10,
+  });
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedQuery(searchQuery), 500);
     return () => clearTimeout(timer);
   }, [searchQuery]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const sortOptions = [
-    { value: 'newest', label: 'Newest first' },
-    { value: 'oldest', label: 'Oldest first' },
-    { value: 'popular', label: 'Most popular' },
-  ];
-  const categories = [
-    'All',
-    'Technology',
-    'Design',
-    'Business',
-    'Lifestyle',
-    'Health',
-  ];
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -114,21 +87,27 @@ export default function Home() {
                   Categories:
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  {categories.map(category => (
-                    <Badge
-                      key={category}
-                      variant={
-                        selectedCategory === category ? 'default' : 'outline'
-                      }
-                      className={`cursor-pointer transition-colors ${selectedCategory === category
-                        ? 'bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]/[0.9]'
-                        : 'bg-[var(--card)] text-[var(--foreground)] border-[var(--border)] hover:bg-[var(--muted)]'
-                        }`}
-                      onClick={() => setSelectedCategory(category)}
-                    >
-                      {category}
-                    </Badge>
-                  ))}
+                  {tagsLoading ? (
+                    <div>Loading tags...</div>
+                  ) : tags && tags.length > 0 ? (
+                    tags.map((tag: Tag) => (
+                      <Badge
+                        key={tag.id}
+                        variant={
+                          selectedCategory === tag.name ? 'default' : 'outline'
+                        }
+                        className={`cursor-pointer transition-colors ${selectedCategory === tag.name
+                          ? 'bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]/[0.9]'
+                          : 'bg-[var(--card)] text-[var(--foreground)] border-[var(--border)] hover:bg-[var(--muted)]'
+                          }`}
+                        onClick={() => setSelectedCategory(tag.name)}
+                      >
+                        {tag.name}
+                      </Badge>
+                    ))
+                  ) : (
+                    <div>No tags available</div>
+                  )}
                 </div>
               </div>
             </div>
@@ -145,7 +124,65 @@ export default function Home() {
           </motion.div>
 
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 sm:grid-cols-2 lg:grid-cols-3 px-4">
-            {[
+
+            {productsLoading ? (
+              <div>Loading products...</div>
+            ) : products ? (
+              products.items.map((product: Product) => (
+                <motion.div
+                  key={product.id}
+                  className="relative flex flex-col rounded-xl bg-[var(--card)] p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-[var(--border)]"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  {product.imgUrl && product.imgUrl[0] && (
+                    <div className="relative w-full h-64 mb-4 rounded-lg overflow-hidden">
+                      <Image
+                        src={product.imgUrl[0]}
+                        alt={product.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                  <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">
+                    {product.name}
+                  </h3>
+                  <div className="flex items-center justify-between mt-auto">
+                    <span className="text-[var(--primary)] font-bold">
+                      {product.price.toLocaleString('vi-VN')}đ
+                    </span>
+                    <span className="text-[var(--primary)] font-bold">
+                      {product.quantity}
+                    </span>
+                    <span className="text-[var(--primary)] font-bold">
+                      {product.color?.join(', ')}
+                    </span>
+                    <span className="text-[var(--primary)] font-bold">
+                      {product.size}
+                    </span>
+                    <Button variant="outline" size="sm">
+                      Chi tiết
+                    </Button>
+                  </div>
+                  {product.productTags && product.productTags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {product.productTags.map((tag) => (
+                        <Badge key={tag.id} variant="secondary" className="text-xs">
+                          {tag.name}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              ))
+            ) : (
+              <div className="col-span-full text-center text-[var(--muted-foreground)]">
+                Không tìm thấy sản phẩm nào
+              </div>
+            )}
+            {/* {[
               {
                 icon: Zap,
                 title: 'Blazing Performance',
@@ -164,7 +201,7 @@ export default function Home() {
                 description:
                   'SEO-optimized, responsive, and accessible, ready for enterprise-grade projects.',
               },
-            ].map((feature, index) => (
+              ].map((feature, index) => (
               <motion.div
                 key={index}
                 className="relative flex flex-col items-center space-y-4 rounded-xl bg-[var(--background)] p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-[var(--border)]"
@@ -183,7 +220,7 @@ export default function Home() {
                   {feature.description}
                 </p>
               </motion.div>
-            ))}
+            ))} */}
           </div>
         </div>
       </motion.section>
