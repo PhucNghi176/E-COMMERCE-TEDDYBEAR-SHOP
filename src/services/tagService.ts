@@ -1,7 +1,7 @@
 import { ApiResult } from "@/types";
 import { Tag } from "@/hooks/useTags";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL_QUERY;
 
 export const tagService = {
     getTags: async (): Promise<Tag[]> => {

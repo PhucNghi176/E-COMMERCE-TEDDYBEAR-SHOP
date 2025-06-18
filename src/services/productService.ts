@@ -1,7 +1,7 @@
 import { Product } from "@/hooks/useProducts";
 import { ApiResult, PaginatedResponse, SearchParamsPaginated } from "@/types";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL_QUERY;
 export const productService = {
     getProducts: async (searchParams: SearchParamsPaginated) => {
         // Build URL parameters more safely
