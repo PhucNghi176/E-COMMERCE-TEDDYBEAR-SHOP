@@ -160,16 +160,16 @@ export default function Home() {
                   viewport={{ once: true }}
                 >
                   {/* Product Image */}
-                  {product.imgUrl?.[0] && (
+                  
                     <div className="relative w-full h-64 mb-4 rounded-lg overflow-hidden">
                       <Image
-                        src={product.imgUrl[0]}
+                        src={product.primaryImageUrl || ''}
                         alt={product.name}
                         fill
                         className="object-cover hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                  )}
+                  
 
                   {/* Product Info */}
                   <div className="space-y-3">

@@ -9,7 +9,7 @@ export interface Product {
     quantity: number;
     price: number;
     color?: string[];
-    imgUrl?: string[];
+    primaryImageUrl?: string;
     tags?: ProductTag[];
     createdAt: string;
     updatedAt?: string;
