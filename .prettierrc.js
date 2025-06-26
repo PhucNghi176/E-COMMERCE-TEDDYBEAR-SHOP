@@ -1,7 +1,7 @@
 // Change your rules accordingly to your coding style preferencies.
 // https://prettier.io/docs/en/options.html
 
-module.exports = {
+export default {
   trailingComma: 'es5',
   singleQuote: true,
   printWidth: 80,
