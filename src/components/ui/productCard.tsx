@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './ProductCard.css';
-import { Product } from '@/hooks/useProducts';
+import { Product } from '@/types';
 
 interface ProductCardProps {
   product: Product;
@@ -41,9 +41,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onProductClick }) =>
           </div>
         )}
 
-        {product.imgUrl && product.imgUrl.length > 1 && (
+        {Array.isArray(product.primaryImageUrl) && product.primaryImageUrl.length > 1 && (
           <div className="product-card__image-dots" role="group" aria-label="Product images">
-            {product.imgUrl.map((url, index) => (
+            {product.primaryImageUrl.map((url: string, index: number) => (
               <button
                 key={index}
                 className={`image-dot ${selectedImage === url ? 'image-dot--active' : ''}`}
