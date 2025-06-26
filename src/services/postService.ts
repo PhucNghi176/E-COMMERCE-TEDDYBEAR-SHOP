@@ -1,3 +1,5 @@
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL_QUERY;
+
 export const postService = {
   getPosts: async (query: string = '', category?: string, sortBy: string = 'newest') => {
     const params = new URLSearchParams();
@@ -5,7 +7,7 @@ export const postService = {
     if (category) params.append('category', category);
     if (sortBy) params.append('sortBy', sortBy);
 
-    const url = params.toString() ? `/api/posts?${params.toString()}` : '/api/posts';
+    const url = params.toString() ? `${BASE_URL}v1/posts?${params.toString()}` : `${BASE_URL}v1/posts`;
     const response = await fetch(url, {
       method: 'GET',
       headers: {

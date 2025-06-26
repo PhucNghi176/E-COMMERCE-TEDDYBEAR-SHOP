@@ -95,6 +95,13 @@ export default function MainNavbar() {
             </Link>
 
             <div className="flex items-center justify-between">
+              <Link
+                href="/sign-in"
+                className="text-sm font-medium text-[var(--foreground)] hover:text-[var(--primary)] transition-all duration-200 hover:translate-x-2"
+                onClick={handleToggle}
+              >
+                Đăng nhập
+              </Link>
               <ThemeToggle />
             </div>
           </div>

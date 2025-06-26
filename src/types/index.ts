@@ -13,10 +13,13 @@ export type AppPropsWithLayout = AppProps & {
 export type ChildrenProps = {
   children: ReactNode;
 };
-
+export interface User {
+  email: string;
+  name: string;
+}
 export type IToken = {
-  accessToken: string;
-  refreshToken?: string;
+  token: string;
+  refreshToken: string;
 };
 
 export interface ApiResult<T> {
