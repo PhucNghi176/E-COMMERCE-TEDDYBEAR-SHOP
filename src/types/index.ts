@@ -89,4 +89,9 @@ export interface Tag {
   id: string;
   name: string;
 }
-
+export interface ErrorResponse {
+  title: string;
+  status: number;
+  detail: string;
+  errors?: string[];
+}
