@@ -1,7 +1,7 @@
 import { useLocalStorage } from "./useLocalStorage";
-import { User } from "@/types";
+import { IToken, User } from "@/types";
 
-export const useUser = () => {
+export const login = () => {
     const [user, setUser] = useLocalStorage<User | null>("user", null);
     return { user, setUser };
 }
