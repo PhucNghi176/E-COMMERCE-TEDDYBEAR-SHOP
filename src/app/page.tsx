@@ -6,9 +6,11 @@ import { Input } from '@/components/ui/input';
 import { useEffect, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Tag, useTags } from '@/hooks/useTags';
-import { useProducts, Product } from '@/hooks/useProducts';
+import { useProducts } from '@/hooks/useProducts';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import FloatingIcon from '@/components/floatingIcon';
+import { Product } from '@/types';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -48,6 +50,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center w-full">
+      <FloatingIcon />
       {/* Hero Section */}
       <motion.section
         className="w-full min-h-screen bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center"
