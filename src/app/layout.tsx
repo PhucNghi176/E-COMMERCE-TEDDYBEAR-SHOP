@@ -29,28 +29,19 @@ export const metadata = {
     icon: '/logo.png',
   },
   title: 'Không thích gấu bông | Gấu bông Ngân Phạm',
-  description:
-    'A highly opinionated and production-ready Next.js 15 boilerplate with TypeScript, Tailwind CSS, ESLint, Prettier, Husky, and comprehensive SEO optimization.',
   keywords:
     'gấu bông,gaubong, gau bong, ngan pham, gấu bông ngân phạm, gaubongnganpham,gau bong ngan pham',
   authors: [{ name: 'Ngân Phạm' }],
   creator: 'Ngân Phạm',
-  metadataBase: new URL('https://your-domain.com'),
+  metadataBase: new URL('https://khongthichgaubong.online'),
   openGraph: {
     type: 'website',
     locale: 'vi_VN',
-    url: 'https://your-domain.com',
+    url: 'https://khongthichgaubong.online',
     title: 'Không thích gấu bông | Gấu bông Ngân Phạm',
     description:
-      'Production-ready Next.js 15 boilerplate with all the essential tools',
-    siteName: 'Next.js Boilerplate',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Next.js Boilerplate',
-    description:
-      'Production-ready Next.js 15 boilerplate with all the essential tools',
-    creator: '@anwarhossainsr',
+      'Gấu bông Ngân Phạm',
+    siteName: 'Gấu bông Ngân Phạm',
   },
 };
 

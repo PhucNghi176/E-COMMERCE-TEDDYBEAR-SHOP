@@ -58,6 +58,8 @@ export default function Home() {
         <motion.div className="text-center space-y-8 px-4" {...fadeIn}>
           <h1 className="text-4xl md:text-6xl font-bold font-poppins bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Gấu bông nhà Ngân
+            <br />
+            <br />
           </h1>
 
           <div className="relative h-64 md:h-96 max-w-md mx-auto">
@@ -67,6 +69,7 @@ export default function Home() {
               fill
               className="object-contain"
               priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
         </motion.div>
@@ -160,16 +163,17 @@ export default function Home() {
                   viewport={{ once: true }}
                 >
                   {/* Product Image */}
-                  
-                    <div className="relative w-full h-64 mb-4 rounded-lg overflow-hidden">
-                      <Image
-                        src={product.primaryImageUrl || ''}
-                        alt={product.name}
-                        fill
-                        className="object-cover hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  
+
+                  <div className="relative w-full h-80 mb-4 rounded-lg overflow-hidden">
+                    <Image
+                      src={product.primaryImageUrl || ''}
+                      alt={product.name}
+                      fill
+                      className="object-cover hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </div>
+
 
                   {/* Product Info */}
                   <div className="space-y-3">
@@ -215,9 +219,9 @@ export default function Home() {
                     {product.tags && product.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1">
                         {product.tags.slice(0, 2).map((tag) => (
-                          <Badge 
-                            key={tag.id} 
-                            variant={searchQuery === tag.name ? "default" : "secondary"} 
+                          <Badge
+                            key={tag.id}
+                            variant={searchQuery === tag.name ? "default" : "secondary"}
                             className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
                             onClick={() => handleTagClick(tag.name)}
                           >
@@ -239,14 +243,14 @@ export default function Home() {
                 <div className="text-6xl mb-4">🧸</div>
                 <h3 className="text-xl font-semibold mb-2">Không tìm thấy sản phẩm</h3>
                 <p className="text-muted-foreground">
-                  {searchQuery 
-                    ? `Không tìm thấy sản phẩm cho "${searchQuery}"` 
+                  {searchQuery
+                    ? `Không tìm thấy sản phẩm cho "${searchQuery}"`
                     : 'Thử tìm kiếm với từ khóa khác'
                   }
                 </p>
                 {searchQuery && (
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="mt-4"
                     onClick={() => {
                       setSearchQuery('');
