@@ -4,9 +4,11 @@ import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import ThemeToggle from './ThemeToggle';
+import { useUser } from '@/contexts/UserContext';
 
 export default function MainNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user } = useUser();
   const handleToggle = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -39,12 +41,15 @@ export default function MainNavbar() {
           >
             Liên hệ
           </Link>
-          <Link
-            href="/sign-in"
-            className="text-md font-medium text-[var(--foreground)] hover:text-[var(--primary)] transition-colors duration-200"
-          >
-            Đăng nhập
-          </Link>
+          {user ? (
+            <Link href="/dashboard" className="text-md font-medium text-[var(--foreground)] hover:text-[var(--primary)] transition-colors duration-200">
+              Quản lý
+            </Link>
+          ) : (
+            <Link href="/sign-in" className="text-md font-medium text-[var(--foreground)] hover:text-[var(--primary)] transition-colors duration-200">
+              Đăng nhập
+            </Link>
+          )}
           <ThemeToggle />
         </nav>
 
@@ -66,8 +71,8 @@ export default function MainNavbar() {
         </button>
 
         <div className={`fixed inset-x-0 top-19 z-50 bg-[var(--background)] border-b border-[var(--border)] shadow-lg md:hidden overflow-hidden transition-all duration-500 ease-in-out max-w-full ${mobileMenuOpen
-            ? 'max-h-screen opacity-100 transform translate-y-0'
-            : 'max-h-0 opacity-0 transform -translate-y-4'
+          ? 'max-h-screen opacity-100 transform translate-y-0'
+          : 'max-h-0 opacity-0 transform -translate-y-4'
           }`}>
           <div className={`container py-6 flex flex-col space-y-4 px-4 sm:px-6 max-w-full transition-all duration-300 ease-in-out delay-100 ${mobileMenuOpen ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-2'
             }`}>
@@ -95,13 +100,15 @@ export default function MainNavbar() {
             </Link>
 
             <div className="flex items-center justify-between">
-              <Link
-                href="/sign-in"
-                className="text-sm font-medium text-[var(--foreground)] hover:text-[var(--primary)] transition-all duration-200 hover:translate-x-2"
-                onClick={handleToggle}
-              >
-                Đăng nhập
-              </Link>
+              {user ? (
+                <Link href="/dashboard" className="text-sm font-medium text-[var(--foreground)] hover:text-[var(--primary)] transition-all duration-200 hover:translate-x-2">
+                  Quản lý
+                </Link>
+              ) : (
+                <Link href="/sign-in" className="text-sm font-medium text-[var(--foreground)] hover:text-[var(--primary)] transition-all duration-200 hover:translate-x-2">
+                  Đăng nhập
+                </Link>
+              )}  
               <ThemeToggle />
             </div>
           </div>
