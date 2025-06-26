@@ -5,17 +5,16 @@
 import FloatingIcon from '@/components/floatingIcon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { authorizeService } from '@/services/authorizeService';
 import { ILogin, IToken, User } from '@/types';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Heart, Mail } from 'lucide-react';
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { decodeJwt } from '@/utils/JwtDecode';
-import { useUser } from '@/hooks/useUser';
+import { useUser } from '@/contexts/UserContext';
 import { useTheme } from 'next-themes';
 
 
@@ -62,12 +61,12 @@ const TeddyBearIcon = ({ className }: { className?: string }) => (
 );
 
 export default function SignInPage() {
-  const { user, setUser } = useUser();
+  const { user, setUser, setToken } = useUser();
   const { theme } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const [, setLocalStorage] = useLocalStorage<IToken | null>("token", null);
+  const searchParams = useSearchParams();
   const {
     register,
     handleSubmit,
@@ -80,13 +79,17 @@ export default function SignInPage() {
     try {
       // Use the actual authorize service to login
       const token = await authorizeService.login(data);
-      setLocalStorage(token);
+      
+      // Set token using UserContext (this will also set cookies automatically)
+      setToken(token);
+      
       const decodedUser = decodeJwt(token);
-      var user: User = {
+      const newUser: User = {
         email: decodedUser?.email || '',
         name: decodedUser?.name || '',
       }
-      setUser(user);
+      setUser(newUser);
+      
       toast.success('Welcome back to our cozy teddy bear family! 🧸', {
         icon: '🧸',
         style: {
@@ -95,7 +98,10 @@ export default function SignInPage() {
           color: 'oklch(var(--accent-foreground))',
         },
       });
-      router.push('/');
+      
+      // Redirect to original destination or dashboard
+      const redirect = searchParams.get('redirect') || '/dashboard';
+      router.push(redirect);
 
     } catch (error) {
 
@@ -105,12 +111,12 @@ export default function SignInPage() {
   };
 
   // Dynamic background based on theme
-  const backgroundStyle = theme === 'dark' 
+  const backgroundStyle = theme === 'dark'
     ? 'bg-gradient-to-br from-slate-900 via-amber-900/20 to-orange-900/30'
     : 'bg-gradient-to-br from-amber-50 via-orange-100 to-yellow-50';
 
   return (
-    <div 
+    <div
       className={`flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8 ${backgroundStyle}`}
     >
       {/* Show welcome if user is signed in */}
