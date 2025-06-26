@@ -39,6 +39,12 @@ export default function MainNavbar() {
           >
             Liên hệ
           </Link>
+          <Link
+            href="/sign-in"
+            className="text-md font-medium text-[var(--foreground)] hover:text-[var(--primary)] transition-colors duration-200"
+          >
+            Đăng nhập
+          </Link>
           <ThemeToggle />
         </nav>
 
