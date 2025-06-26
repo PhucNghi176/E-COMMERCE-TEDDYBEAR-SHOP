@@ -1,5 +1,4 @@
-import { Product } from "@/hooks/useProducts";
-import { ApiResult, PaginatedResponse, SearchParamsPaginated } from "@/types";
+import { ApiResult, PaginatedResponse, Product, SearchParamsPaginated } from "@/types";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL_QUERY;
 export const productService = {

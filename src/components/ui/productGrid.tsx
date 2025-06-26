@@ -1,6 +1,6 @@
 import React from 'react';
 import './ProductGrid.css';
-import { Product } from '@/hooks/useProducts';
+import { Product } from '@/types';  
 import ProductCard from './productCard';
 
 interface ProductGridProps {
