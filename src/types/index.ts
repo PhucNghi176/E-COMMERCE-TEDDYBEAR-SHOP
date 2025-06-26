@@ -61,3 +61,32 @@ export interface CurrentUserProps {
     isAdmin: boolean;
   } | null;
 }
+export interface ILogin {
+  email: string;
+  password: string;
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  size?: string;
+  quantity: number;
+  price: number;
+  color?: string[];
+  primaryImageUrl?: string;
+  imgUrl?: string[];
+  tags?: ProductTag[];
+  createdAt: string;
+  updatedAt?: string;
+  deletedAt?: string;
+}
+
+export interface ProductTag {
+  id: string;
+  name: string;
+}
+export interface Tag {
+  id: string;
+  name: string;
+}
+
