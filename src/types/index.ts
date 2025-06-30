@@ -36,6 +36,7 @@ export interface SearchParams {
   searchTerm: string;
   sortColumn?: string;
   sortOrder: string;
+  tags?: string;
 }
 export interface PaginationParams {
   pageIndex: number;
@@ -97,4 +98,37 @@ export interface ErrorResponse {
   status: number;
   detail: string;
   errors?: string[];
+}
+
+export interface TeddyBear {
+  id: string;
+  name: string;
+  size?: string;
+  quantity: number;
+  price: number;
+  color?: string[];
+  primaryImageUrl?: string;
+  tags?: TeddyBearTag[];
+  createdAt: string;
+  updatedAt?: string;
+  deletedAt?: string;
+}
+
+export interface TeddyBearTag {
+  id: string;
+  name: string;
+}
+
+export interface CreateTeddyBearRequest {
+  name: string;
+  size?: string;
+  quantity: number;
+  price: number;
+  color?: string[];
+  primaryImgUrl?: string;
+  tagIds?: string[];
+}
+
+export interface UpdateTeddyBearRequest extends Partial<CreateTeddyBearRequest> {
+  id: string;
 }
