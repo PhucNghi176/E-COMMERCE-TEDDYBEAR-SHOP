@@ -3,6 +3,7 @@
 
 'use client';
 
+import { IToken } from '@/types';
 import { useEffect, useState } from 'react';
 
 export const useLocalStorage = <T,>(
@@ -34,3 +35,10 @@ export const useLocalStorage = <T,>(
   };
   return [storedValue, setValue];
 };
+export const getToken = (): string | null => {
+  if (typeof window !== 'undefined') {
+    var token: IToken | null = JSON.parse(localStorage.getItem('token') || 'null');
+    if (token) { return token.token }
+  }
+  return null;
+}
