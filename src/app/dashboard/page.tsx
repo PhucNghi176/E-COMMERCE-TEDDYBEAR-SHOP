@@ -1,7 +1,7 @@
 'use client';
 import { useUser } from '@/contexts/UserContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LogOut, Settings, User, Menu, X } from 'lucide-react';
+import { LogOut, Settings, User, Menu, X, Beaker, PawPrint } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -62,6 +62,14 @@ export default function DashboardPage() {
           >
             <User className="h-5 w-5" />
             Profile
+          </Link>
+          <Link
+            href="/dashboard/teddybears"
+            className="flex items-center gap-2 p-2 text-sm font-medium text-[var(--foreground)] hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)] rounded-md transition-colors duration-200"
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            <PawPrint  className="h-5 w-5" />
+            Teady bear
           </Link>
           <Link
             href="/dashboard/settings"
