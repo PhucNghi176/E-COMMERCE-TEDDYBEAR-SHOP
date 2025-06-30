@@ -16,18 +16,44 @@ export class ApiResponseHandler {
     response: Response,
   ): Promise<T> {
     if (response.ok) {
-      var result: ApiResult<T> = await response.json();
-      return result.value;
+      const text = await response.text();
+      if (text) {
+        var result: ApiResult<T> = JSON.parse(text);
+        return result.value;
+      }
+      throw new Error('Empty response from server');
     }
-    var error: ErrorResponse = await response.json();
-    toast.error(error.title + "\n " + error.detail, {
-      icon: '🧸',
-      style: {
-        borderRadius: '12px',
-        background: '#8B4513',
-        color: '#fff',
-      },
-    });
-    throw new Error(error.title + "\n " + error.detail);
+
+    // Handle 401 Unauthorized specifically
+    if (response.status === 401) {
+      toast.error('Not authorized - Please log in again', {
+        icon: '🔒',
+        style: {
+          borderRadius: '12px',
+          background: '#dc2626',
+          color: '#fff',
+        },
+      });
+      throw new Error('Not authorized');
+    }
+
+    const text = await response.text();
+    if (text) {
+      try {
+        var error: ErrorResponse = JSON.parse(text);
+        toast.error(error.title + "\n " + error.detail, {
+          icon: '🧸',
+          style: {
+            borderRadius: '12px',
+            background: '#8B4513',
+            color: '#fff',
+          },
+        });
+        throw new Error(error.title + "\n " + error.detail);
+      } catch {
+        throw new Error('Upload failed: ' + text);
+      }
+    }
+    throw new Error('Upload failed with no response');
   }
 } 
