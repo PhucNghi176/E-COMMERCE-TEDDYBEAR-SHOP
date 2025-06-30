@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // Define protected routes that require authentication
 const protectedRoutes = [
   '/dashboard',
-  '/dashboard/settings'
+  '/dashboard/*',
 ];
 
 // Define auth routes that should redirect to dashboard if user is already authenticated
