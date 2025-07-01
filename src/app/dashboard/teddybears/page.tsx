@@ -10,6 +10,7 @@ import { useTags, Tag } from '@/hooks/useTags';
 import { useTeddyBears, useCreateTeddyBear, useUpdateTeddyBear, useDeleteTeddyBear } from '@/hooks/useTeddyBears';
 import TeddyBearCard from '@/components/ui/TeddyBearCard';
 import TeddyBearForm from '@/components/ui/TeddyBearForm';
+import ConfirmDialog from '@/components/ui/ConfirmDialog';
 import { CreateTeddyBearRequest, TeddyBear, UpdateTeddyBearRequest } from '@/types';
 import toast from 'react-hot-toast';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -23,6 +24,8 @@ export default function TeddyBearsPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTeddyBear, setEditingTeddyBear] = useState<TeddyBear | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [deletingTeddyBear, setDeletingTeddyBear] = useState<TeddyBear | null>(null);
 
   // Get selected tags from URL parameters (format: ?tag=bear&&brown)
   const tagsParam = searchParams.get('tag');
@@ -102,16 +105,28 @@ export default function TeddyBearsPage() {
     setIsFormOpen(true);
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this teddy bear?')) {
-      try {
-        await deleteMutation.mutateAsync(id);
-        toast.success('Teddy bear deleted successfully! 🧸');
-      } catch (error) {
-        toast.error('Failed to delete teddy bear');
-        console.error('Delete error:', error);
-      }
+  const handleDelete = (teddyBear: TeddyBear) => {
+    setDeletingTeddyBear(teddyBear);
+    setDeleteConfirmOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!deletingTeddyBear) return;
+
+    try {
+      await deleteMutation.mutateAsync(deletingTeddyBear.id);
+      toast.success('Teddy bear deleted successfully! 🧸');
+      setDeleteConfirmOpen(false);
+      setDeletingTeddyBear(null);
+    } catch (error) {
+      toast.error('Failed to delete teddy bear');
+      console.error('Delete error:', error);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteConfirmOpen(false);
+    setDeletingTeddyBear(null);
   };
 
   const handleFormSubmit = async (formData: CreateTeddyBearRequest | UpdateTeddyBearRequest) => {
@@ -291,7 +306,7 @@ export default function TeddyBearsPage() {
                   key={teddyBear.id}
                   teddyBear={teddyBear}
                   onEdit={handleEdit}
-                  onDelete={handleDelete}
+                  onDelete={() => handleDelete(teddyBear)}
                   showActions={true}
                 />
               ))
@@ -356,6 +371,19 @@ export default function TeddyBearsPage() {
         onSubmit={handleFormSubmit}
         initialData={editingTeddyBear}
         isLoading={createMutation.isPending || updateMutation.isPending}
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={deleteConfirmOpen}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Delete Product"
+        message={`Are you sure you want to delete "${deletingTeddyBear?.name}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        isLoading={deleteMutation.isPending}
+        variant="danger"
       />
     </div>
   );

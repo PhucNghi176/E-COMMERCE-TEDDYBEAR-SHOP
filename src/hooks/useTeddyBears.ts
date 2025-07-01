@@ -46,7 +46,7 @@ export const useDeleteTeddyBear = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (id: string) => teddyBearService.deleteTeddyBear(id),
+        mutationFn: (id: number) => teddyBearService.deleteTeddyBear(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['teddybears'] });
         },

@@ -10,7 +10,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 interface TeddyBearCardProps {
   teddyBear: TeddyBear;
   onEdit?: (teddyBear: TeddyBear) => void;
-  onDelete?: (id: string) => void;
+  onDelete?: () => void;
   showActions?: boolean;
 }
 
@@ -38,7 +38,7 @@ const TeddyBearCard: React.FC<TeddyBearCardProps> = ({
 
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onDelete?.(teddyBear.id);
+    onDelete?.();
   };
 
   const handleTagClick = (e: React.MouseEvent, tagName: string) => {

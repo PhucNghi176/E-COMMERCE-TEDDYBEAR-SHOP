@@ -71,7 +71,7 @@ export const teddyBearService = {
         const headers: Record<string, string> = {
             'Content-Type': 'application/json',
         };
-        
+
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
         }
@@ -100,7 +100,7 @@ export const teddyBearService = {
         const headers: Record<string, string> = {
             'Content-Type': 'application/json',
         };
-        
+
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
         }
@@ -124,19 +124,20 @@ export const teddyBearService = {
         }
     },
 
-    deleteTeddyBear: async (id: string): Promise<void> => {
+    deleteTeddyBear: async (id: number): Promise<void> => {
         const token = getToken();
         const headers: Record<string, string> = {
             'Content-Type': 'application/json',
         };
-        
+
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
         }
 
-        const response = await fetch(`${BASE_URL_COMMAND}v1/products/${id}`, {
+        const response = await fetch(`${BASE_URL_COMMAND}v1/products`, {
             method: 'DELETE',
             headers,
+            body: JSON.stringify({ id }),
         });
 
         if (!response.ok) {

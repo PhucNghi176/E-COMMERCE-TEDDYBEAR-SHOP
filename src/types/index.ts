@@ -101,7 +101,7 @@ export interface ErrorResponse {
 }
 
 export interface TeddyBear {
-  id: string;
+  id: number;
   name: string;
   size?: string;
   quantity: number;

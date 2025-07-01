@@ -169,7 +169,7 @@ export default function Home() {
 
                   <div className="relative w-full h-80 mb-4 rounded-lg overflow-hidden">
                     <Image
-                      src={product.primaryImageUrl || ''}
+                      src={product.primaryImageUrl || '/logo.png'}
                       alt={product.name}
                       fill
                       className="object-cover hover:scale-105 transition-transform duration-300"
