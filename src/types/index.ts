@@ -130,5 +130,5 @@ export interface CreateTeddyBearRequest {
 }
 
 export interface UpdateTeddyBearRequest extends Partial<CreateTeddyBearRequest> {
-  id: string;
+  id: number;
 }
