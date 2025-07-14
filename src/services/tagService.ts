@@ -11,7 +11,7 @@ export const tagService = {
                 'Content-Type': 'application/json',
             },
         });
-
+        console.log("123421423434");
         if (!response.ok) {
             throw new Error('Failed to fetch tags');
         }
